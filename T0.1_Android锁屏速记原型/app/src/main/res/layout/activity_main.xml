@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="24dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="锁屏速记" android:textColor="#17191C" android:textSize="28sp" android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" android:text="T0.1 · R4 可行性原型"
+            android:textColor="#667085" android:textSize="14sp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="先发送速记通知，再锁定屏幕。展开锁屏上的「锁屏速记」通知，在内嵌输入框写入内容并点保存；无需解锁，文字会保存到本机 SQLite。"
+            android:textColor="#344054" android:textSize="16sp" />
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" android:onClick="onPostNotification" android:text="发送锁屏速记通知" />
+        <TextView android:id="@+id/statusText" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" android:textColor="#315EFB" android:textSize="14sp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:text="锁屏显示设置"
+            android:textColor="#17191C" android:textSize="18sp" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="系统设置 → 通知 → 锁屏通知：选择「显示所有通知内容」或允许「锁屏速记」显示完整内容。部分厂商系统还需开启「锁屏通知可操作 / 直接回复」。若系统禁止锁屏输入，属于厂商限制，请换原生 Android 验收。"
+            android:textColor="#667085" android:textSize="14sp" />
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" android:onClick="onOpenNotificationSettings" android:text="打开通知渠道设置" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="28dp" android:text="已保存的速记"
+            android:textColor="#17191C" android:textSize="18sp" android:textStyle="bold" />
+        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:onClick="onRefresh" android:text="刷新本地记录" />
+        <TextView android:id="@+id/notesText" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" android:paddingBottom="32dp"
+            android:textColor="#344054" android:textIsSelectable="true" android:textSize="14sp" />
+    </LinearLayout>
+</ScrollView>

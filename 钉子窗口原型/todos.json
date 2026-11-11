@@ -3,17 +3,17 @@
                   {
                       "text":  "sefaw",
                       "tag":  "今日",
-                      "done":  false
+                      "done":  true
                   },
                   {
                       "text":  "评审钉子窗口原型（试试悬停穿透）",
                       "tag":  "今日",
-                      "done":  false
+                      "done":  true
                   },
                   {
                       "text":  "回复项目合作邮件",
                       "tag":  "今日",
-                      "done":  false
+                      "done":  true
                   },
                   {
                       "text":  "同步市场调研结论到飞书",
@@ -23,7 +23,7 @@
                   {
                       "text":  "读书笔记：第三章",
                       "tag":  "远程",
-                      "done":  true
+                      "done":  false
                   },
                   {
                       "text":  "整理竞品对照矩阵",
