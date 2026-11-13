@@ -1,6 +1,6 @@
 param(
     [string]$ProjectRoot = $PSScriptRoot,
-    [string]$ToolchainRoot = 'C:\Users\admin\AppData\Local\T01AndroidToolchain'
+    [string]$ToolchainRoot = 'E:\APP_桌面TODO\project\T01AndroidToolchain'
 )
 $ErrorActionPreference = 'Stop'
 $createdSubst = $false
