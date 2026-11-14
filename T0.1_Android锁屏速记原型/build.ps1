@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$ProjectRoot = $PSScriptRoot,
     [string]$ToolchainRoot = 'E:\APP_桌面TODO\project\T01AndroidToolchain'
 )
