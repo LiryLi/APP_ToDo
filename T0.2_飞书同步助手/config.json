@@ -1,0 +1,8 @@
+{
+    "app_id": "cli_xxxxxxxx",
+    "app_secret": "在这里粘贴应用凭证页的 Secret",
+    "todos_path": "E:\\APP_桌面TODO\\project\\钉子窗口原型\\todos.json",
+    "tag": "远程",
+    "digest_time": "08:30",
+    "chat_id": ""
+}

@@ -196,9 +196,22 @@ function Load-Todos {
 }
 
 function Save-Todos {
+    # T0.2 合并保护：写入前并入其他写入方（飞书守护进程）新增的条目，避免整文件覆盖丢失
+    try {
+        $disk = [IO.File]::ReadAllText($script:DataFile) | ConvertFrom-Json
+        foreach ($it in @($disk.items)) {
+            $known = $false
+            foreach ($m in @($script:items)) { if ($m.text -eq $it.text) { $known = $true; break } }
+            if (-not $known) { $script:items = @($script:items) + $it }
+        }
+    } catch { }
     $payload = @{ items = $script:items; pos = @($window.Left, $window.Top) } | ConvertTo-Json -Depth 4
     for ($i = 0; $i -lt 3; $i++) {
-        try { [IO.File]::WriteAllText($script:DataFile, $payload, $script:Utf8NoBom); return }
+        try {
+            [IO.File]::WriteAllText($script:DataFile, $payload, $script:Utf8NoBom)
+            $script:lastSyncStamp = [IO.File]::GetLastWriteTimeUtc($script:DataFile)
+            return
+        }
         catch { Start-Sleep -Milliseconds 200 }
     }
 }
@@ -206,6 +219,8 @@ function Save-Todos {
 $loaded = Load-Todos
 $script:items = $loaded.items
 $script:winPos = $loaded.pos
+$script:lastSyncStamp = [DateTime]::MinValue
+try { if (Test-Path -LiteralPath $script:DataFile) { $script:lastSyncStamp = [IO.File]::GetLastWriteTimeUtc($script:DataFile) } } catch { }
 
 # ---------------- 状态 ----------------
 $script:mode = 'normal'          # normal | pinned
@@ -573,6 +588,26 @@ $timer.Add_Tick({
     }
 })
 $timer.Start()
+
+# T0.2 外部变更感知：飞书守护进程写入 todos.json 后 2 秒内自动刷新
+$syncTimer = New-Object System.Windows.Threading.DispatcherTimer
+$syncTimer.Interval = [TimeSpan]::FromSeconds(2)
+$syncTimer.Add_Tick({
+    try {
+        if ($script:collapsed) { return }
+        if (-not (Test-Path -LiteralPath $script:DataFile)) { return }
+        $cur = [IO.File]::GetLastWriteTimeUtc($script:DataFile)
+        if ($cur -gt $script:lastSyncStamp) {
+            $script:lastSyncStamp = $cur
+            $loaded = Load-Todos
+            if (@($loaded.items).Count -gt 0) {
+                $script:items = $loaded.items
+                Rebuild-Rows
+            }
+        }
+    } catch { }
+})
+$syncTimer.Start()
 
 Rebuild-Rows
 
